@@ -1,10 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { saveAs } from "file-saver";
+// import axios from "axios";
 
 function Export() {
-  const exportData = () => {
-    // 在這裡實現匯出資料庫內容的邏輯
-    console.log("匯出資料庫內容");
+  const exportData = async () => {
+    try {
+      const response = await fetch(
+        "/api/v1/get_appointment_details?user_id=123&start_date=2024-06-10&end_date=2024-06-14"
+      );
+      const data = await response.json();
+      downloadCSV(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const convertToCSV = (data) => {
+    const headers = Object.keys(data[0]).join(",");
+    const rows = data.map((row) => Object.values(row).join(",")).join("\n");
+    return `${headers}\n${rows}`;
+  };
+
+  const downloadCSV = (data) => {
+    const csv = convertToCSV(data);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "後台預約資料.csv");
   };
 
   return (

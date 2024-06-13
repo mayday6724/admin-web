@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Validation from "./SignupValidation";
 
 function Signup() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
     professional: "",
@@ -24,35 +24,35 @@ function Signup() {
     setErrors(Validation(values));
 
     // 檢查是否所有欄位都填寫正確
-    const hasErrors = Object.keys(errors).some((key) => errors[key]);
+    // const hasErrors = Object.keys(errors).some((key) => errors[key]);
 
-    if (!hasErrors) {
-      // 不知道為什麼通知不會work
-      if ("Notification" in window && Notification.permission === "granted") {
-        const notification = new Notification("帳號創建成功", {
-          body: "您的帳號已成功創建",
-        });
-        setTimeout(() => {
-          navigate("/");
-          notification.close();
-        }, 3000);
-      } else if (
-        "Notification" in window &&
-        Notification.permission !== "denied"
-      ) {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === "granted") {
-            const notification = new Notification("帳號創建成功", {
-              body: "您的帳號已成功創建",
-            });
-            setTimeout(() => {
-              navigate("/");
-              notification.close();
-            }, 3000);
-          }
-        });
-      }
-    }
+    // if (!hasErrors) {
+    //   // 不知道為什麼通知不會work
+    //   if ("Notification" in window && Notification.permission === "granted") {
+    //     const notification = new Notification("帳號創建成功", {
+    //       body: "您的帳號已成功創建",
+    //     });
+    //     setTimeout(() => {
+    //       navigate("/");
+    //       notification.close();
+    //     }, 3000);
+    //   } else if (
+    //     "Notification" in window &&
+    //     Notification.permission !== "denied"
+    //   ) {
+    //     Notification.requestPermission().then(function (permission) {
+    //       if (permission === "granted") {
+    //         const notification = new Notification("帳號創建成功", {
+    //           body: "您的帳號已成功創建",
+    //         });
+    //         setTimeout(() => {
+    //           navigate("/");
+    //           notification.close();
+    //         }, 3000);
+    //       }
+    //     });
+    //   }
+    // }
   };
 
   return (
@@ -90,6 +90,7 @@ function Signup() {
               <option value="OT">職能治療師</option>
               <option value="PT">物理治療師</option>
               <option value="ST">語言治療師</option>
+              <option value="PSY">臨床心理師</option>
             </select>
             {errors.professional && (
               <span className="text-danger"> {errors.professional}</span>
